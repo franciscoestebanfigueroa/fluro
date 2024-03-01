@@ -34,8 +34,10 @@ class _MyAppState extends State<MyApp> {
         useMaterial3: true,
       ),
       //home: const MyHomePage(),
-      initialRoute: "home",
+      //initialRoute: "page2",
+      
       onGenerateRoute: MyRouter.router.generator,
+      home: MyBody(),
     );
   }
 }
@@ -51,8 +53,8 @@ class MyBody extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          TextButton(onPressed: (){MyRouter.router.navigateTo(context, "page1");}, child:const  Text("page 1")),
-          TextButton(onPressed: (){MyRouter.router.navigateTo(context, "page2");}, child:const  Text("page 2")),
+          TextButton(onPressed: (){MyRouter.router.navigateTo(context, "/page1");}, child:const  Text("page 1")),
+          TextButton(onPressed: (){MyRouter.router.navigateTo(context, "/page2");}, child:const  Text("page 2")),
     
         ],
       ),
