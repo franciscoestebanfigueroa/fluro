@@ -34,10 +34,9 @@ class _MyAppState extends State<MyApp> {
         useMaterial3: true,
       ),
       //home: const MyHomePage(),
-      //initialRoute: "page2",
-      
       onGenerateRoute: MyRouter.router.generator,
-      home: MyBody(),
+      initialRoute: "/home",
+      //home: MyBody(),
     );
   }
 }
@@ -70,6 +69,7 @@ class PageUno extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.blue,
+      child: const Center(child: Text("page 1")),
     );
   }
 }
@@ -81,6 +81,7 @@ class PageDos extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.red,
+      child: const Center(child: Text("Page 2")),
     );
   }
 }
