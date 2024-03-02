@@ -2,6 +2,15 @@ import 'package:fluro/fluro.dart';
 import 'package:flurox/handler.dart';
 import 'package:flutter/material.dart';
 
+ class Navegar{
+
+ static final GlobalKey <NavigatorState>globalKey =GlobalKey <NavigatorState>();
+
+  Future NavegatTo(String path)=> globalKey.currentState!.pushNamed(path);
+
+ }
+ 
+
 void main() {
   
   runApp(const MyApp());
@@ -33,28 +42,69 @@ class _MyAppState extends State<MyApp> {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      //home: const MyHomePage(),
+      navigatorKey: Navegar.globalKey,
       onGenerateRoute: MyRouter.router.generator,
       initialRoute: "/home",
-      //home: MyBody(),
+       builder: (context, child) => Scaffold(body: MyBody(child: Expanded(child: child?? Container(color: Colors.amber,))),), 
+      
+      
     );
   }
 }
 
+class MyBodyPage extends StatefulWidget {
+  const MyBodyPage({super.key});
+
+  @override
+  State<MyBodyPage> createState() => _MyBodyPageState();
+}
+
+class _MyBodyPageState extends State<MyBodyPage> {
+  PageController controller=PageController(initialPage: 1);
+  
+  
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: PageView(
+      scrollDirection: Axis.vertical,
+        controller: controller,
+        children: [
+          PageDos(),
+          PageUno(),
+        ],
+      ),
+    );
+  }
+}
+
+
+
+
 class MyBody extends StatelessWidget {
-  const MyBody({
-    super.key,
+  final Widget child ;
+  
+   MyBody({
+    super.key, required this.child,
   });
 
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: Column(
         children: [
-          TextButton(onPressed: (){MyRouter.router.navigateTo(context, "/page1");}, child:const  Text("page 1")),
-          TextButton(onPressed: (){MyRouter.router.navigateTo(context, "/page2");}, child:const  Text("page 2")),
-    
+          child,
+          Spacer(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              //los query los pasamos con parametros opcional ? y [q:100]
+              TextButton(onPressed: (){MyRouter.router.navigateTo(context, "/page1?q=100");}, child:const  Text("page 1")),
+              TextButton(onPressed: (){MyRouter.router.navigateTo(context, "/page2");}, child:const  Text("page 2")),
+              TextButton(onPressed: (){Navegar().NavegatTo("/page1");}, child:const  Text("page 2 pero con key")),
+              
+            ],
+          ),
         ],
       ),
     );
