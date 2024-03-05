@@ -1,5 +1,7 @@
-import 'package:fluro/fluro.dart';
+
+import 'package:flurox/Layout/Page_home.dart';
 import 'package:flurox/handler.dart';
+import 'package:flurox/view/custom_page.dart';
 import 'package:flutter/material.dart';
 
  class Navegar{
@@ -45,93 +47,10 @@ class _MyAppState extends State<MyApp> {
       navigatorKey: Navegar.globalKey,
       onGenerateRoute: MyRouter.router.generator,
       initialRoute: "/home",
-       builder: (context, child) => Scaffold(body: MyBody(child: Expanded(child: child?? Container(color: Colors.amber,))),), 
+       builder: (context, child) => Home(child: child!), 
+      //home: Home(child: CustomPage()),
       
-      
     );
   }
 }
 
-class MyBodyPage extends StatefulWidget {
-  const MyBodyPage({super.key});
-
-  @override
-  State<MyBodyPage> createState() => _MyBodyPageState();
-}
-
-class _MyBodyPageState extends State<MyBodyPage> {
-  PageController controller=PageController(initialPage: 1);
-  
-  
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: PageView(
-      scrollDirection: Axis.vertical,
-        controller: controller,
-        children: [
-          PageDos(),
-          PageUno(),
-        ],
-      ),
-    );
-  }
-}
-
-
-
-
-class MyBody extends StatelessWidget {
-  final Widget child ;
-  
-   MyBody({
-    super.key, required this.child,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        children: [
-          child,
-          Spacer(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              //los query los pasamos con parametros opcional ? y [q:100]
-              TextButton(onPressed: (){MyRouter.router.navigateTo(context, "/page1?q=100");}, child:const  Text("page 1")),
-              TextButton(onPressed: (){MyRouter.router.navigateTo(context, "/page2");}, child:const  Text("page 2")),
-              TextButton(onPressed: (){Navegar().NavegatTo("/page1");}, child:const  Text("page 2 pero con key")),
-              
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-
-class PageUno extends StatelessWidget {
-  const PageUno({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.blue,
-      child: const Center(child: Text("page 1")),
-    );
-  }
-}
-
-class PageDos extends StatelessWidget {
-  const PageDos({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.red,
-      child: const Center(child: Text("Page 2")),
-    );
-  }
-}
