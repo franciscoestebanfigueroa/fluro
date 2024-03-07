@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
       navigatorKey: CustomNavegation.globalKey,
       onGenerateRoute: MyRouter.router.generator,
       initialRoute: "/page1",
-      builder: (context, child) => Home(child: child!), 
+      
       
       
     );

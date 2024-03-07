@@ -1,5 +1,9 @@
+import 'dart:js';
+
 import 'package:animate_do/animate_do.dart';
+import 'package:flurox/provider/custom_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatelessWidget {
   final Widget child;
@@ -49,6 +53,7 @@ class _MenuAnimationState extends State<MenuAnimation>
     with SingleTickerProviderStateMixin {
     late AnimationController _controller;
     bool _onOff=false;
+    int _isHover=-1;
     List<String> item=[
       "Page 1",
       "Page 2",
@@ -72,74 +77,86 @@ class _MenuAnimationState extends State<MenuAnimation>
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: (){
-        if(_onOff==true) {
-          _controller.forward();
-        _onOff= false;
-        }
-        else{
-          _controller.reverse();
-          _onOff=true;
-        }
-        setState(() {
-          
-        });
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Align(
-          alignment: Alignment.topLeft,
-          
+  final _provider = Provider.of<MyCustomProvider>(context);
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Align(
+        alignment: Alignment.topLeft,
+        
+        child: MouseRegion(
+          onEnter: (_) {
+                 setState(() {
+                 _onOff=true; 
+                   
+                 });
+                  
+                },
+                onExit: (event) {
+                  setState(() {
+                    _onOff=false;
+                  }
+                  );
+                },
           child: AnimatedContainer(
-            duration:  Duration(milliseconds: 10000),
-            width: _onOff? 200:100,
-            height:_onOff? 300:30,
-            color: Colors.amber,
-            child: Column(
+            duration:  const Duration(milliseconds: 150),
+            width: _onOff? 130:100,
+            height:_onOff? 200:30,
+            color: Colors.grey[400],
+            child: Stack(
              
               children: [
-                Row(                
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Row(
+                  mainAxisAlignment: _onOff? MainAxisAlignment.end :MainAxisAlignment.spaceAround,                
+                  
                   children: [
-                    const Text("Menu"),
-                    Expanded(child: Container(
-                      height: 0,
-                      color: Colors.grey,)),
+                    const Text("Menu",style: TextStyle(fontSize: 20),),
                     AnimatedIcon(
                       icon: AnimatedIcons.close_menu, 
                       progress: _controller,
                         
                       ),
-                      Container(height: 20,),
-                      
-                      
                       
                   ],
                 ),
-                      !_onOff?
+                      _onOff?
                       
-                      FadeIn(
-                        delay: Duration(seconds: 5),
-                        child: Container(
-                          color: Colors.red,
-                          width: 190,
-                          height: 190,
-                          child: ListView.builder(
-                           
-                          itemCount:item.length,
-                          itemBuilder: (context, index) =>  FadeInLeft(
-                            delay: Duration(milliseconds: (1+index)*600),
-                            child: Align(
-                              alignment: Alignment.bottomRight,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(item[index]),
-                              ))), 
-                          
-                          
-                                                ),
-                        ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 30),
+                        child: ListView.builder(
+                         
+                        itemCount:item.length,
+                        itemBuilder: (context, index) =>  FadeInLeft(
+                          delay: Duration(milliseconds: (1+index)*100),
+                          child: Align(
+                            alignment: Alignment.bottomRight,
+                            child: Padding(
+                              padding: const EdgeInsets.only(bottom: 8,right: 4,left: 4),
+                              child: MouseRegion(
+                                cursor: SystemMouseCursors.click,
+                                onEnter: (_) {
+                                  setState(() {
+                                    _provider.controller.animateToPage(
+                                      index, duration: const Duration(milliseconds: 200), 
+                                      curve: Curves.bounceIn);
+                                    
+                                 _isHover=index;   
+                                  });
+                                } ,
+                                onExit: (_) {
+                                  setState(() {
+                                    
+                                  _isHover=-1;
+                                  });
+                                },
+                                child: ClickMenu(
+                                  isHover: _isHover,
+                                   item: item,
+                                   index: index
+                                   )),
+                            ))), 
+                        
+                        
+                                              ),
                       ):const Spacer()
               ],
             ),
@@ -150,3 +167,35 @@ class _MenuAnimationState extends State<MenuAnimation>
       
   }
 }
+
+class ClickMenu extends StatelessWidget {
+   ClickMenu({
+    super.key,
+    required int isHover,
+    required this.item,
+    required this.index
+  }) : _isHover = isHover;
+  final int index;
+  final int _isHover;
+  final List<String> item;
+
+  @override
+  Widget build(BuildContext context) {
+
+  final _provider = Provider.of<MyCustomProvider>(context);
+    return GestureDetector(
+      onTap: () {
+        _provider.controller.jumpToPage(index);
+        
+        
+      },
+      child: Container(
+        alignment: Alignment.bottomRight,
+        width: 200,
+        color: _isHover==index?Colors.grey:Colors.transparent,
+        child: Text(item[index],style: const TextStyle(fontSize: 18),)),
+    );
+  }
+}
+
+

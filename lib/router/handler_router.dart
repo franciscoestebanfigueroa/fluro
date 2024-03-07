@@ -18,21 +18,23 @@ static void configuracionRouter(){
 
   router.define("/page1", handler: Handler(handlerFunc: (context, parameters) {
     print("parametros page1$parameters");
-    return   MyCustomPage() ;},));
+    return  Home(child: MyCustomPage()) ;},));
 
      router.define("/page2", handler: Handler(handlerFunc: (context, parameters) {
      print("parametros page2$parameters");
-     return   MyCustomPage() ;},));
+      final provider=Provider.of<MyCustomProvider>(context!,listen: false);
+      provider.pagex=2;
+     return  Home(child: MyCustomPage()) ;},));
 
      router.define("/page3", handler: Handler(handlerFunc: (context, parameters) {
      print("parametros page3$parameters");
      final provider = Provider.of<MyCustomProvider>(context!,listen: false);
      provider.pagex=3;
-     return  Home(child: MyCustomPage(),) ;},));
+     return  Home(child: MyCustomPage()) ;},));
 
      router.define("/page4", handler: Handler(handlerFunc: (context, parameters) {
      print("parametros page4$parameters");
-     return   MyCustomPage() ;},));
+     return  Home(child: MyCustomPage()) ;},));
   
     
     router.notFoundHandler=Handler(handlerFunc: (context, parameters) => Center(child: const Text("404"),),);

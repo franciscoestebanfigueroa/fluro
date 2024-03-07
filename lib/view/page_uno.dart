@@ -13,16 +13,7 @@ class PageUno extends StatelessWidget {
     final provider = Provider.of<MyCustomProvider>(context);
     return Container(
       color: Colors.blue,
-      child:  Column(
-        children: [
-          const Center(child: Text("page 1")),
-          FloatingActionButton(onPressed: (){
-            provider.pagex=2;
-            //CustomNavegation().NavegatorTo("/page3");
-            
-            })
-        ],
-      ),
+      child: const Center(child: Text("page 1")),
     );
   }
 }

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class MyCustomProvider extends ChangeNotifier {
  int  page ;
 
- late PageController controller =PageController(initialPage: page);
+  late PageController controller ;
 
 List<String>lista =[
   "/page1",
@@ -17,7 +17,7 @@ List<String>lista =[
 MyCustomProvider({required this.page}){
   print(page);
  
-  
+  controller =PageController(initialPage: page);
 controller.addListener((){
   print(controller.page?.round());
   //spage=controller.page!.round();
