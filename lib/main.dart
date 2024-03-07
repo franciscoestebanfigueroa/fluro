@@ -1,40 +1,46 @@
 
-import 'package:flurox/Layout/Page_home.dart';
-import 'package:flurox/handler.dart';
+import 'package:flurox/singlento/custom_singlenton.dart';
 import 'package:flurox/view/custom_page.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
- class Navegar{
+import 'package:flurox/Layout/Page_home.dart';
+import 'package:flurox/router/handler_router.dart';
+import 'package:flurox/provider/custom_provider.dart';
 
- static final GlobalKey <NavigatorState>globalKey =GlobalKey <NavigatorState>();
-
-  Future NavegatTo(String path)=> globalKey.currentState!.pushNamed(path);
-
- }
+ 
  
 
 void main() {
-  
-  runApp(const MyApp());
+  MyRouter.configuracionRouter();
+  runApp(const MyAppProvider());
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+
+class MyAppProvider extends StatelessWidget {
+  const MyAppProvider({super.key});
 
   @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  // This widget is the root of your application.
-  @override
-  void initState() {
-    MyRouter.configuracionRouter();
-    super.initState();
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+                
+               child: const MyApp(),
+               create: (context) => MyCustomProvider(page: 0),
+              );
+            
+            
+      
   }
-  
-  
-  
+}
+
+
+
+
+
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+ 
   
   @override
   Widget build(BuildContext context) {
@@ -44,11 +50,11 @@ class _MyAppState extends State<MyApp> {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      navigatorKey: Navegar.globalKey,
+      navigatorKey: CustomNavegation.globalKey,
       onGenerateRoute: MyRouter.router.generator,
-      initialRoute: "/home",
-       builder: (context, child) => Home(child: child!), 
-      //home: Home(child: CustomPage()),
+      initialRoute: "/page1",
+      builder: (context, child) => Home(child: child!), 
+      
       
     );
   }
