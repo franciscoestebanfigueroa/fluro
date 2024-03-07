@@ -1,21 +1,15 @@
-
 import 'package:flurox/singlento/custom_singlenton.dart';
-import 'package:flurox/view/custom_page.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:flurox/Layout/Page_home.dart';
 import 'package:flurox/router/handler_router.dart';
 import 'package:flurox/provider/custom_provider.dart';
-
- 
- 
 
 void main() {
   MyRouter.configuracionRouter();
   runApp(const MyAppProvider());
 }
-
 
 class MyAppProvider extends StatelessWidget {
   const MyAppProvider({super.key});
@@ -23,25 +17,15 @@ class MyAppProvider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-                
-               child: const MyApp(),
-               create: (context) => MyCustomProvider(page: 0),
-              );
-            
-            
-      
+      child: const MyApp(),
+      create: (context) => MyCustomProvider(),
+    );
   }
 }
 
-
-
-
-
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
- 
-  
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -53,10 +37,6 @@ class MyApp extends StatelessWidget {
       navigatorKey: CustomNavegation.globalKey,
       onGenerateRoute: MyRouter.router.generator,
       initialRoute: "/page1",
-      
-      
-      
     );
   }
 }
-
