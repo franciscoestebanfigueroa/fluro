@@ -7,30 +7,19 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class MyCustomPage extends StatelessWidget {
-
- 
-  
-   MyCustomPage({super.key, });
+  MyCustomPage({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-print("me dibujo");
-  final provider=Provider.of<MyCustomProvider>(context);
-  
-    
-    
-    return Expanded(
-      child: PageView(
+    print("me dibujo");
+    final provider = Provider.of<MyCustomProvider>(context);
 
-        controller: provider.controller,
-        scrollDirection: Axis.vertical,
-        children: const [
-          PageUno(),
-          PageDos(),
-          PageTres(),
-          PageCuatro()
-        ],
-
-      ),);
+    return PageView(
+      controller: provider.controller,
+      scrollDirection: Axis.vertical,
+      children: const [PageUno(), PageDos(), PageTres(), PageCuatro()],
+    );
   }
 }

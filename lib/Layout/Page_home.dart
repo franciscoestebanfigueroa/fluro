@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:animate_do/animate_do.dart';
 import 'package:flurox/provider/custom_provider.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +14,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
-        children: [Expanded(child: child), Menu()],
+        children: [child, Menu()],
       ),
     );
   }
@@ -144,7 +142,7 @@ class _MenuAnimationState extends State<MenuAnimation>
                                   ))),
                         ),
                       )
-                    : const Spacer()
+                    : Container()
               ],
             ),
           ),
