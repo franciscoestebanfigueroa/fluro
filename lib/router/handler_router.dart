@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:fluro/fluro.dart';
 import 'package:flurox/Layout/Page_home.dart';
 
@@ -10,41 +12,62 @@ class MyRouter {
   static FluroRouter router = FluroRouter();
 
   static void configuracionRouter() {
-    router.define("/:page1", handler: Handler(
+    router.define("/:page", handler: Handler(
+
+
       handlerFunc: (context, parameters) {
-        print("parametros page1$parameters");
-        return Home(child: MyCustomPage());
+
+        final provider = Provider.of<MyCustomProvider>(context!, listen: false);
+        if(parameters["page"]!.first != "/"){
+        
+        final String data = parameters["page"]!.first;
+         print("parametros page1$parameters");
+          
+        provider.nuevaInstanciacontroler(data);
+        return const Home();
+
+        }
+               
+
       },
     ));
 
-    router.define("/:page2", handler: Handler(
+
+/*
+    router.define("/page2", handler: Handler(
       handlerFunc: (context, parameters) {
         print("parametros page2$parameters");
-
-        return Home(child: MyCustomPage());
+        final provider = Provider.of<MyCustomProvider>(context!, listen: false);
+        provider.nuevaInstanciacontroler(1);
+        return Home();
       },
     ));
 
-    router.define("/:page3", handler: Handler(
+    router.define("/page3", handler: Handler(
       handlerFunc: (context, parameters) {
         print("parametros page3$parameters");
         final provider = Provider.of<MyCustomProvider>(context!, listen: false);
-        provider.pagex = 3;
-        return Home(child: MyCustomPage());
+        provider.nuevaInstanciacontroler(2);
+        return Home();
       },
     ));
 
-    router.define("/:page4", handler: Handler(
+    router.define("/page4", handler: Handler(
       handlerFunc: (context, parameters) {
         print("parametros page4$parameters");
-        return Home(child: MyCustomPage());
+        final provider = Provider.of<MyCustomProvider>(context!, listen: false);
+        provider.nuevaInstanciacontroler(3);
+        return const Home();
       },
     ));
 
     router.notFoundHandler = Handler(
-      handlerFunc: (context, parameters) => Center(
-        child: const Text("404"),
+      handlerFunc: (context, parameters) => const Center(
+        child: Text("404"),
       ),
     );
+
+*/
   }
+
 }

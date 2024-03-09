@@ -6,7 +6,7 @@ class PageTres extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.red,
+      color: Color.fromARGB(255, 202, 25, 12),
       child: const Center(child: Text("Page 3")),
     );
   }

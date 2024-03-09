@@ -6,7 +6,7 @@ class PageDos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.amber,
+      color: Color.fromARGB(255, 201, 154, 13),
       child: const Center(child: Text("Page 2")),
     );
   }

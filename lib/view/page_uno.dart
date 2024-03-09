@@ -12,7 +12,7 @@ class PageUno extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = Provider.of<MyCustomProvider>(context);
     return Container(
-      color: Colors.blue,
+      color: Color.fromARGB(255, 9, 189, 189),
       child: const Center(child: Text("page 1")),
     );
   }

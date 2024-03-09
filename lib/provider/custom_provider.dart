@@ -24,6 +24,15 @@ class MyCustomProvider extends ChangeNotifier {
       print(lista[_page]);
     });
   }
+  void nuevaInstanciacontroler(String x){
+    controller.dispose();
+int pos = lista.indexOf(x);
+if (pos>=0) { this.controller=PageController(initialPage: pos);}
+else 
+{pos=0;
+ this.controller=PageController(initialPage: pos);
+ }
+  }
 
   set pagex(int x) {
     _page = x;
@@ -31,6 +40,6 @@ class MyCustomProvider extends ChangeNotifier {
     // html.window.history.pushState(null, "title", "#/${lista[_page]}");
     universal.window.history.pushState(null, "title", "#/${lista[_page]}");
 
-    notifyListeners();
+   //notifyListeners(); no se necesita crea lios
   }
 }

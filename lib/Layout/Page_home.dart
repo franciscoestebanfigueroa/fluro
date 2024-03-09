@@ -1,20 +1,22 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flurox/provider/custom_provider.dart';
+import 'package:flurox/view/custom_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class Home extends StatelessWidget {
-  final Widget child;
+  
   const Home({
     super.key,
-    required this.child,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
-        children: [child, Menu()],
+        children: [
+          MyCustomPage(),
+          const Menu()],
       ),
     );
   }
@@ -66,7 +68,7 @@ class _MenuAnimationState extends State<MenuAnimation>
 
   @override
   Widget build(BuildContext context) {
-    final _provider = Provider.of<MyCustomProvider>(context);
+    final _provider = Provider.of<MyCustomProvider>(context,listen: false);
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Align(
@@ -122,7 +124,7 @@ class _MenuAnimationState extends State<MenuAnimation>
                                           setState(() {
                                             _provider.pagex = index;
                                             _provider.controller.animateToPage(
-                                                index,
+                                              index,
                                                 duration: const Duration(
                                                     milliseconds: 200),
                                                 curve: Curves.bounceIn);
@@ -165,7 +167,7 @@ class ClickMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _provider = Provider.of<MyCustomProvider>(context);
+    final _provider = Provider.of<MyCustomProvider>(context,listen: false);
     return GestureDetector(
       onTap: () {
         _provider.controller.jumpToPage(index);
